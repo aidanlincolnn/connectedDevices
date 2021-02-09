@@ -1,0 +1,10 @@
+#pacManZone {
+    position : absolute;
+    left : 10px;
+    top : 30px;
+}
+
+#pacMan {
+    width : 114px;
+    height : 136px;
+}
