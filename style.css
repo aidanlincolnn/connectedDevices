@@ -1,4 +1,4 @@
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1000px) {
     body {
         font-family: 'Helvetica', 'Arial', sans-serif;
         /* calculate the font size based on the view width:  */
