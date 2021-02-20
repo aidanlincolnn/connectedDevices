@@ -43,24 +43,31 @@ void loop() {
     int button = !digitalRead(A0);
     x = map(x, 0, 1023, 0, 3) - 1;
     y = map(y, 0, 1023, 0, 3) -1;
-    //send data 10x faster than screen refresh rate to make the joystick function better
-    //- still not fast enough for lunar lander
+    //dont waste resources updating the display every loop
     if(loopCount % 50 == 0 || button == 1){
       updateDisplay(x,y,button);
     }
     loopCount ++;
     if (HIDEnabled) {
       if(x==1){
-        Keyboard.write(KEY_RIGHT_ARROW); 
+        Keyboard.press(KEY_RIGHT_ARROW); 
       }
       else if(x==-1){
-        Keyboard.write(KEY_LEFT_ARROW);
+        Keyboard.press(KEY_LEFT_ARROW);
+      }
+      else if(x==0){
+        Keyboard.release(KEY_RIGHT_ARROW);
+        Keyboard.release(KEY_LEFT_ARROW);
       }
       if(y==1){
-        Keyboard.write(KEY_UP_ARROW);
+        Keyboard.press(KEY_UP_ARROW);
       }
       if(y==-1){
-        Keyboard.write(KEY_DOWN_ARROW);
+        Keyboard.press(KEY_DOWN_ARROW);
+      }
+      else if(y==0){
+        Keyboard.release(KEY_UP_ARROW);
+        Keyboard.release(KEY_DOWN_ARROW);
       }
     }
     if(button == 1){
