@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Send To Arduino BLE</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86">
+  <script src="https://unpkg.com/p5ble@0.0.6/dist/p5.ble.js" type="text/javascript"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div id="welcomeMessage"><p>Arduino BLE Central</p></br><p>Click to connect to arduino then send 1 to turn on light and 0 to turn off light</p></br></div>
+  <p id="p1" style="color:red">Status: Not Connected</p>
+  <input id="connectButton" type="button" value="Connect To Arduino" onClick="connectToBle()"><br/></input> 
+  <div id="connected" hidden>
+    <label for="message">Message To Send To Arduino:</label>
+    <input id="message" type="text"  size="10"><br/></br></p>
+    <input id="writeButton" type="button" value="Write To Arduino" onClick="writeToBle()"><br/>
+  </div>
+</body>
+</html>
