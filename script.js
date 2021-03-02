@@ -1,12 +1,8 @@
-/*
-  Generates QR code for current url to pass to phone. Uses 
-  
-  
-  // The serviceUuid must match the serviceUuid of the device you would like to connect
-// Copyright (c) 2018 p5ble
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT*/
+/*Aidan Lincoln Fowler
+  Connected Devices
+  BLE Central which connects to arduino peripheral and turns the onboard light on and off
+  Boilerplate from https://itp.nyu.edu/physcomp/labs/lab-bluetooth-le-and-p5-ble/
+*/
 
 const serviceUuid = "19B10000-E8F2-537E-4F6C-D104768A1214";
 let myCharacteristic;
