@@ -5,7 +5,11 @@
 */
 
 const serviceUuid = "12634d99-d598-4874-8e86-7d042ee07ba7";
-let myCharacteristic;
+let wifiStatus;
+let wifiName;
+let wifiPassword;
+let updateAndReboot;
+
 let myBLE;
 
 function setup() {
@@ -29,19 +33,37 @@ function gotCharacteristics(error, characteristics) {
   }
   else{
     document.getElementById("connected").removeAttribute("hidden");
-    document.getElementById("p1").innerHTML = "Status: Connected!";
+    document.getElementById("p1").innerHTML = "Bluetooth Status: Connected!";
     document.getElementById("p1").style.color="rgb(148, 255, 110)";
     document.getElementById("connectButton").style.display="none";
   }
   console.log('characteristics: ', characteristics);
-  // Set the first characteristic as myCharacteristic
-  myCharacteristic = characteristics[0];
+  if(characteristics.length == 4){
+    wifiStatus = characteristics[0];
+    myBLE.read(wifiStatus);
+    console.log('wifistatus after read:',wifiStatus)
+    wifiName = characteristics[1];
+    wifiPassword = characteristics[2];
+    updateAndReboot = characteristics[3];
+  }
+
 }
 
-function writeToBle() {
-  var messageVal = document.getElementById("message").value;
-  // Write the value of the input to the myCharacteristic
-  myBLE.write(myCharacteristic, messageVal);
+function writeToWifiName() {
+  var wifiName = document.getElementById("wifiName").value;
+  myBLE.write(wifiName, wifiName);
+}
+
+function writeToWifiPassword() {
+  var wifiPass = document.getElementById("wifiPass").value;
+  myBLE.write(wifiPassword, wifiPass);
+}
+
+function saveAndReboot() {
+  writeToWifiName()
+  writeToWifiPassword()
+  var reboot = '1';
+  myBLE.write(wifiPassword, reboot);
 }
 
 // add a listener for the page to load:

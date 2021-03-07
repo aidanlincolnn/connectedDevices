@@ -8,13 +8,17 @@
   <script src="script.js"></script>
 </head>
 <body>
-  <div id="welcomeMessage"><p>BLE Central</p></br><p>Click to connect to Raspberry Pi Peripheral</p></br></div>
-  <p id="p1" style="color:red">Status: Not Connected</p>
-  <input id="connectButton" type="button" value="Connect To Arduino" onClick="connectToBle()"><br/></input> 
+  <div id="welcomeMessage"><p>Infinite Content Wifi Setup</p></br><p>Click to connect to Raspberry Pi Via Bluetooth</p></br></div>
+  <p id="p1" style="color:red">Bluetooth Status: Not Connected</p>
+  <input id="connectButton" type="button" value="Connect To Raspberry Pi" onClick="connectToBle()"><br/></input> 
   <div id="connected" hidden>
-    <label for="message">Message To Send To RPi:</label>
-    <input id="message" type="text"  size="10"><br/></br></p>
-    <input id="writeButton" type="button" value="Write To Arduino" onClick="writeToBle()"><br/>
+    <p id="wifiNotConnected" style="color:red">Current Wifi Status: Not Connected</p>
+    <p id="wifiConnected" style="color:green">Current Wifi Status: Connected</p>
+    <label for="wifiName">Wifi Router Name (SSID):</label>
+    <input id="wifiName" type="text"  size="10"><br/></br></p>
+    <label for="wifiPass">Wifi Router Password:</label>
+    <input id="wifiPass" type="text"  size="10"><br/></br></p>
+    <input id="saveAndReboot" type="button" value="Save New Wifi Name And Password (will reboot Rasberry Pi)" onClick="saveAndReboot()"><br/>
   </div>
 </body>
 </html>
