@@ -1,6 +1,6 @@
 /*Aidan Lincoln Fowler
   Connected Devices
-  BLE Central which connects to arduino peripheral and turns the onboard light on and off
+  BLE Central which connects to rpi peripheral and gets wifi status / gives you ability to update wpa supplicant with your wifi router information
   Boilerplate from https://itp.nyu.edu/physcomp/labs/lab-bluetooth-le-and-p5-ble/
 */
 
