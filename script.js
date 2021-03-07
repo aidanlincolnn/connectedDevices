@@ -4,9 +4,8 @@
   Boilerplate from https://itp.nyu.edu/physcomp/labs/lab-bluetooth-le-and-p5-ble/
 */
 
-const serviceUuid = "19B10000-E8F2-537E-4F6C-D104768A1214";
+const serviceUuid = "12634d99-d598-4874-8e86-7d042ee07ba7";
 let myCharacteristic;
-let input;
 let myBLE;
 
 function setup() {
