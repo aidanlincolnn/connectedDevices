@@ -10,6 +10,8 @@ let wifiName;
 let wifiPassword;
 let updateAndReboot;
 
+let wifiStatusDisplay;
+
 let myBLE;
 
 function setup() {
@@ -21,49 +23,76 @@ function connectToBle() {
   myBLE.connect(serviceUuid, gotCharacteristics);
 }
 
-function test(){
-  document.getElementById("connected").removeAttribute("hidden");
-  document.getElementById("p1").innerHTML = "Status: Connected!";
-  document.getElementById("connectButton").style.display="none";
-}
-
 function gotCharacteristics(error, characteristics) {
   if (error) {
     console.log('error: ', error);
   }
-  else{
+  else if(myBLE.isConnected()){
     document.getElementById("connected").removeAttribute("hidden");
     document.getElementById("p1").innerHTML = "Bluetooth Status: Connected!";
     document.getElementById("p1").style.color="rgb(148, 255, 110)";
     document.getElementById("connectButton").style.display="none";
-  }
-  console.log('characteristics: ', characteristics);
-  if(characteristics.length == 4){
-    wifiStatus = characteristics[0];
-    myBLE.read(wifiStatus);
-    console.log('wifistatus after read:',wifiStatus)
-    wifiName = characteristics[1];
-    wifiPassword = characteristics[2];
-    updateAndReboot = characteristics[3];
+  
+    if(characteristics.length == 4){
+      wifiName = characteristics[0];
+      wifiPassword = characteristics[1];
+      updateAndReboot = characteristics[2];
+      wifiStatus = characteristics[3];
+      myBLE.read(wifiStatus,'string',gotWifiStatus);
+      myBLE.read(wifiName,'string',gotValue);
+      myBLE.read(wifiPassword,'string',gotValue);
+      myBLE.read(updateAndReboot,'string',gotValue);
+      
+    }
+    else{
+      console.log('received an unexpected number of characteristics');
+    }
   }
 
+}
+
+function gotValue(error, value) {
+  if (error) {
+    console.log('error: ', error);
+  }
+  else{
+    console.log('characteristic value: ', value);
+  }
+}
+
+function gotWifiStatus(error, value) {
+  if (error) {
+    console.log('error: ', error);
+    wifiStatusDisplay = 'Error Retrieving Wifi Status'
+  }
+  else{
+    console.log('wifi status: ', value);
+    wifiStatusDisplay = value;
+    if(wifiStatusDisplay == 'Connected'){
+      document.getElementById("wifiNotConnected").style.display="none"
+    }
+    else{
+      document.getElementById("wifiConnected").style.display="none"
+    }
+  }
 }
 
 function writeToWifiName() {
-  var wifiName = document.getElementById("wifiName").value;
-  myBLE.write(wifiName, wifiName);
+  var newWifiName = document.getElementById("wifiName").value;
+  console.log('setting wifi name to',newWifiName);
+  myBLE.write(wifiName, newWifiName);
 }
 
 function writeToWifiPassword() {
-  var wifiPass = document.getElementById("wifiPass").value;
-  myBLE.write(wifiPassword, wifiPass);
+  var newWifiPass = document.getElementById("wifiPass").value;
+  console.log('setting wifi pass to',newWifiPass);
+  myBLE.write(wifiPassword, newWifiPass);
 }
 
 function saveAndReboot() {
   writeToWifiName()
   writeToWifiPassword()
-  var reboot = '1';
-  myBLE.write(wifiPassword, reboot);
+  myBLE.write(updateAndReboot, "1");
 }
 
 // add a listener for the page to load:
