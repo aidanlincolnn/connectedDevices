@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Raspberry Pi Wifi Configuration</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86">
+  <script src="p5.ble.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div id="infinityImage"> <img src='InfinteContentWifi.jpg'/>
+  <div id="welcomeMessage" hidden=true><h1>Infinite Content Wifi Setup</h1></div>
+  <p id="p1" style="color:red" hidden=true>Bluetooth Status: Not Connected</p>
+  <br/><br/><input id="connectButton" type="button" value="Connect To Raspberry Pi" onClick="connectToBle()"></input> 
+  <div id="connected" hidden> 
+    <p id="wifiNotConnected" style="color:red">Current Wifi Status: Not Connected!</p>
+    <p id="wifiConnected" style="color:rgb(148, 255, 110)">Current Wifi Status: Connected!</p>
+    <label for="wifiName">New Wifi Name (SSID):</label>
+    <input id="wifiName" type="text"  size="10"></br></p>
+    <label for="wifiPass">New Wifi Password:</label>
+    <input id="wifiPass" type="text"  size="10"></br></p>
+    <p style="color:red">Clicking update will change the default Rasberry Pi wifi configuration and reboot the Pi</p>
+    <input id="saveAndReboot" type="button" value="UPDATE" onClick="saveAndReboot()"><br/>
+  </div>
+</body>
+</html>
