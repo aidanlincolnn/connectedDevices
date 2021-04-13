@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.2/p5.min.js">
+	</script>
+	<script>
+		function setup() {
+		}
+		
+		function downloadFileList(response){
+			httpGet('/glitch/filelist', displayFileList);
+		}
+
+		function displayFileList(response){
+			var obj = JSON.parse(response);
+			var gifNameList= document.getElementById("gifNames");
+			gifNameList.innerHTML = "";
+			for(i=0;i<obj.result.length;i++){
+				gifNameList.innerHTML += "<li id='"+obj.result[i]+"'>" + obj.result[i] 
+					+"  <button class='button' id='"+obj.result[i]+"downloader'  style=''  type='button' onclick=\"downloadGif('"+obj.result[i]+"')\">Download</button>"
+					+"  <button class='button'  id='"+obj.result[i]+"player'  style='display:none' type='button' onclick=\"previewGif('"+obj.result[i]+"')\">Preview</button>"
+					+"<br/><img id='"+obj.result[i]+"viewer' src=''/>"+ "</li>" ;
+			}
+			var showContentButton = document.getElementById('showContent');
+			showContentButton.style.display="none";
+		}
+
+		function downloadGif(gifName){
+			httpGet('/glitch/downloadGif/'+gifName, displayGif);
+		}
+
+		function displayGif(response){
+			var obj = JSON.parse(response);
+			var gifId = document.getElementById(obj.gifName+'viewer');
+			console.log('setting gif source, unsure why this makes it freeze');
+			gifId.src=obj.filePath;
+			console.log(gifId.src);
+
+			var playButton = document.getElementById(obj.gifName+'player');
+			playButton.style.display="";
+			var downloadButton = document.getElementById(obj.gifName+'downloader');
+			downloadButton.style.display="none";
+		}
+
+		function previewGif(gifName){
+			var gifId = document.getElementById(gifName+'viewer');
+			var temp = gifId.src;
+			gifId.src = temp;
+			console.log(gifId.src);
+
+		}
+	</script>
+	</head>
+	<body>
+		Infintie Content Control<br/>
+		<button onclick="downloadFileList()" id="showContent">Show Available Content</button>
+		<br/>
+		<ul id="gifNames">
+		</ul>
+	</body>
+</html>
