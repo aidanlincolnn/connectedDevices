@@ -14,12 +14,13 @@ function displayLocalFiles(response){
     for(i=0; i<obj.gifList.length;i++){
         var gifName = obj.gifList[i];
         var thumbnail = gifName.replace('.gif','-thumbnail.png');
-        gifNameList.innerHTML += "<li style='margin-bottom: 20px' id='"+gifName+"'>" + gifName
-        +"  <button class='button'  id='"+gifName+"player'  style='' type='button' onclick=\"previewGif('"+gifName+"')\">Preview</button>"	
+        gifNameList.innerHTML += "<li style='margin-bottom: 30px' id='"+gifName+"'>" + gifName
+        +"<br/><img id='"+gifName+"viewer' style='margin-top:5px' src='/content/"+thumbnail+"' />"
+        +"  <button class='button'  id='"+gifName+"player'  style='margin-top: 10px' type='button' onclick=\"previewGif('"+gifName+"')\">Preview</button>"	
         +"  <button class='button'  id='"+gifName+"playerLed'  style='' type='button' onclick=\"playGif('"+gifName+"')\">Play</button>"	
-        +"  <button class='button'  id='"+gifName+"playerLedStop'  style='' type='button' onclick=\"stopGif('"+gifName+"')\">Stop</button>"	
+        +"  <button class='button'  id='"+gifName+"playerLedStop'  style='display:none' type='button' onclick=\"stopGif('"+gifName+"')\">Stop</button>"	
         +"  <div id='"+gifName+"playMessage'  style='display:none'>Loading Gif For Playback</div>"
-        +"<br/><img id='"+gifName+"viewer' src='/content/"+thumbnail+"' />"+ "</li>" ;
+        + "</li>" ;
     }
 }
 
@@ -37,13 +38,14 @@ function displayFileList(response){
     gifNameList.innerHTML = "";
     if(obj.result.length >0){
         for(i=0;i<obj.result.length;i++){
-            gifNameList.innerHTML += "<li style='margin-bottom: 20px' id='"+obj.result[i]+"'>" + obj.result[i] 
-                +"  <button class='button' id='"+obj.result[i]+"downloader'  style=''  type='button' onclick=\"downloadGif('"+obj.result[i]+"')\">Download</button>"
+            gifNameList.innerHTML += "<li style='margin-bottom: 30px' id='"+obj.result[i]+"'>" + obj.result[i] 
+                +"<br/><img id='"+obj.result[i]+"viewer' style='margin-top:10px' src='' />"
+                +"  <button class='button' id='"+obj.result[i]+"downloader'  style='margin-top: 10px'  type='button' onclick=\"downloadGif('"+obj.result[i]+"')\">Download</button>"
                 +"  <button class='button'  id='"+obj.result[i]+"player'  style='display:none' type='button' onclick=\"previewGif('"+obj.result[i]+"')\">Preview</button>"
                 +"  <button class='button'  id='"+obj.result[i]+"playerLed'  style='display:none' type='button' onclick=\"playGif('"+obj.result[i]+"')\">Play</button>"
                 +"  <button class='button'  id='"+obj.result[i]+"playerLedStop'  style='display:none' type='button' onclick=\"stopGif('"+obj.result[i]+"')\">Stop</button>"	
                 +"  <div id='"+obj.result[i]+"playMessage'  style='display:none'>Loading Gif For Playback</div>"
-                +"<br/><img id='"+obj.result[i]+"viewer' src='' />"+ "</li>" ;
+                + "</li>" ;
         }
     }
     else{
@@ -69,7 +71,7 @@ function displayGif(response){
     var playLEDButton = document.getElementById(obj.gifName+'playerLed');
     playLEDButton.style.display="";
     var playLEDButton = document.getElementById(obj.gifName+'playerLedStop');
-    playLEDButton.style.display="";
+    playLEDButton.style.display="none";
     var downloadButton = document.getElementById(obj.gifName+'downloader');
     downloadButton.style.display="none";
 }
@@ -86,18 +88,31 @@ function previewGif(gifName){
 }
 
 function playGif(gifName){
+    var ww = document.querySelectorAll('[id$="playerLed"]');
+    for(var i = 0; i < ww.length; i++){
+        ww[i].style.display="none";
+    }
+    var playLEDButton = document.getElementById(gifName+'playerLed');
+    playLEDButton.style.display="none";
+    var playLEDButtonStop = document.getElementById(gifName+'playerLedStop');
+    playLEDButtonStop.style.display="";
     httpGet('/playGif/'+gifName, showLoadingMessage);
 }
 
 function stopGif(gifName){
+    var ww = document.querySelectorAll('[id$="playerLed"]');
+    for(var i = 0; i < ww.length; i++){
+        ww[i].style.display="";
+    }
+    var playLEDButton = document.getElementById(gifName+'playerLed');
+    playLEDButton.style.display="";
+    var playLEDButtonStop = document.getElementById(gifName+'playerLedStop');
+    playLEDButtonStop.style.display="none";
     var playMessage = document.getElementById(gifName+'playMessage');
     playMessage.style.display="none";
     httpGet('/stopGif/'+gifName);
 }
-//message that the gif is loading 
-//try to figure out if there is some way to see if the gif script has run 
-//so the message can be removed
-//not so sure its possible bc it is running and then loading the gif into memory
+
 function showLoadingMessage(response){
     var obj = JSON.parse(response);
     var playMessage = document.getElementById(obj.gifName+'playMessage');

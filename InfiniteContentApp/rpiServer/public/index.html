@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.2/p5.min.js"></script>
 		<script src="requestController.js"></script>
+		<link rel="stylesheet" href="style.css">
 	</head>
-	<body style="color: aqua; background: black;">
-		<div style="font-size: 35px;">
+	<body class="bodyStyle">
+		<div class="bigText">
 			Infinite Content Control<br/>
 		</div>
+		<img src="./StarTunnel1080.jpg" class="splashImage"/>
 		<br/>
-		<div style="font-size: 20px; color: lime" > LOCAL GIFS</div>
-		<div style="color: white">
-			<ul style = 'list-style-type: none;padding-left:0;overflow: hidden;' id="localGifs"></ul>
+		<div>
+			<ul  id="localGifs"></ul>
 		</div>
-		<div style="font-size: 20px; color: red"> DOWNLOADABLE GIFS <br/></div>
-		<div style="color: white">
-			<button onclick="downloadFileList()" id="showContent">Show Available Content</button>
+		<div class="regularText"> DOWNLOADABLE GIFS <br/></div>
+		<div>
+			<button onclick="downloadFileList()" id="showContent" >Show Available Content</button>
 			<div id="noContent" style="display: none">No New Content Available</div>
-			<ul style = 'list-style-type: none;padding-left:0;overflow: hidden;' id="gifNames"></ul>
+			<ul  id="gifNames"></ul>
 		</div>
 	</body>
 </html>
