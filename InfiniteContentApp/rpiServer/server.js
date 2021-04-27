@@ -129,23 +129,25 @@ function loadLocalGifs(req,res){
 function playGif(req,res){
 	//shutoff any gif that is already playing 
 	stopGif();
-
+	console.log(req.params.gifName);
 	gifPlayer = spawn("sudo",["bash", "/home/aidan/nodeServer/playGifLocal.sh","/home/aidan/nodeServer/content/"+req.params.gifName]);             
 	gifPlayer.on('error', (error) => {
 		console.log(`error: ${error.message}`);
 	});
 
 	gifPlayer.on("close", code => {
-		console.log('gif player closed');
+		console.log('gif player closed in play gif'); 
 	});
 	res.status(200).json({gifName: req.params.gifName, message: "loading gif"}).end();
 }
 
 //stop any gif that is playing
-function stopGif(){
+async function stopGif(){
+	console.log('stop gif called');
 	if(gifPlayer &&  gifPlayer.pid != null){
 		kill(gifPlayer.pid);
 	}
+	await new Promise(r => setTimeout(r, 2000));
 }
 
 //serve up public folder with index.html
